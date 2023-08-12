@@ -37,7 +37,7 @@ public class GoalManager : MonoBehaviour
         if (onLevelComplete)
         {
             StartCoroutine("SceneTransition");
-            player.canMove = false;
+            player.SetPlayerCanMove(false);
             player.rigid.velocity = new Vector2(player.Speed(), 0);
         }
     }

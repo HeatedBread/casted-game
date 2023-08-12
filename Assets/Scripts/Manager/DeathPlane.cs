@@ -15,7 +15,7 @@ public class DeathPlane : MonoBehaviour
     private void KillPlayer()
     {
         pHealth.SetHealth(0);
-        pHealth.onPlayerReset = true;
+        pHealth.playerReset = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

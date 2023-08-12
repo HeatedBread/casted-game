@@ -1388,6 +1388,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e6c81f6d00f750448a4c48947b4ffbd, type: 3}
+--- !u!4 &478232938 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4861540026815762169, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+  m_PrefabInstance: {fileID: 4861540027175516017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &488036569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8662184418327820839, guid: 3e6c81f6d00f750448a4c48947b4ffbd, type: 3}
@@ -4840,6 +4845,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8662184418327820839, guid: 3e6c81f6d00f750448a4c48947b4ffbd, type: 3}
   m_PrefabInstance: {fileID: 1699694167}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1702956512 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4861540026709811418, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+  m_PrefabInstance: {fileID: 4861540027175516017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1739406424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5831,6 +5841,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8814497752766753408, guid: 0af0c0c7154890340b22edb37a1fa2e1, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1965787656}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0af0c0c7154890340b22edb37a1fa2e1, type: 3}
 --- !u!4 &2144022540 stripped
@@ -6092,6 +6106,18 @@ PrefabInstance:
       propertyPath: JumpCounter
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4861540026623264208, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1702956512}
+    - target: {fileID: 4861540026623264208, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: 478232938}
+    - target: {fileID: 4861540026623264208, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 4861540026623264209, guid: 292210d0679032b468920ad3c00656d8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6143,6 +6169,14 @@ PrefabInstance:
     - target: {fileID: 4861540026623264239, guid: 292210d0679032b468920ad3c00656d8, type: 3}
       propertyPath: m_Name
       value: -- PLAYER --
+      objectReference: {fileID: 0}
+    - target: {fileID: 5365550322709017958, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+      propertyPath: stunTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5365550322709017958, guid: 292210d0679032b468920ad3c00656d8, type: 3}
+      propertyPath: liveRemaining
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5365550322709017958, guid: 292210d0679032b468920ad3c00656d8, type: 3}
       propertyPath: KnockbackDistance

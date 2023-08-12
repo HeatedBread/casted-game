@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (!pHealth) return;
         HeartManager();
     }
 
@@ -47,7 +48,7 @@ public class UIManager : MonoBehaviour
                 hearts[i].sprite = emptyHeart;
             }
 
-            if (i < pHealth.maxHealth)
+            if (i < pHealth.GetMaxHealth())
             {
                 hearts[i].enabled = true;
             }

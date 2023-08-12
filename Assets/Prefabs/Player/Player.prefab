@@ -237,13 +237,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d7216d1c739834ea7e88b9103b8daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StunTime: 0.5
-  KnockbackDistance: 2
-  DeathTime: 0
-  onPlayerReset: 0
-  CurrentHealth: 4
-  MaxHealth: 4
-  LivesRemaining: 3
+  stunTime: 0.5
+  knockbackDistance: 2
+  deathTime: 0
+  playerRespawn: 0
+  maxHealth: 4
+  liveRemaining: 3
 --- !u!114 &4861540026623264208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,14 +255,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22bbfa0629fb2fe47b4f2ff778196fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 7
-  JumpForce: 20
-  JumpForceMultiplier: 0.5
-  JumpCounter: 2
-  JumpsRemaining: 0
-  MoveDirection: 0
-  GroundDistance: 0.3
-  isGrounded: 0
+  moveSpeed: 7
+  jumpForce: 20
+  jumpForceMultiplier: 0.5
+  doubleJumpsRemaining: 0
+  maxJumpCounter: 2
+  groundDistance: 0.3
   canMove: 0
   canJump: 0
   rigid: {fileID: 0}

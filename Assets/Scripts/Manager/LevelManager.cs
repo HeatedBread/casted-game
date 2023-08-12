@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<PlayerController>();
-        StartCoroutine("FreezePlayerPos");
+        StartCoroutine(FreezePlayerPos());
     }
 
     public void RespawnPlayer()
@@ -33,8 +33,8 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator FreezePlayerPos()
     {
-        player.canMove = false;
+        player.SetPlayerCanMove(false);
         yield return new WaitForSeconds(1.5f);
-        player.canMove = true;
+        player.SetPlayerCanMove(true);
     }
 }

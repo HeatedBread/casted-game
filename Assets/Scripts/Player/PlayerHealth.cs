@@ -7,13 +7,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public float stunTime;
     public float knockbackDistance;
     public float deathTime;
-    public bool onPlayerReset;
+    public bool playerReset;
 
     [Header("Health")]
     private int currentHealth;
     [SerializeField] private int maxHealth;
 
-    public int liveRemaining;
+    [SerializeField] private int liveRemaining;
 
     private LevelManager levelManager;
 
@@ -33,21 +33,19 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void HealthManager()
     {
-        if (currentHealth > maxHealth)
-        {
+        if (liveRemaining <= 0) {
+            liveRemaining = 0;
+        }
+        
+        if (currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
 
-        if (liveRemaining <= 0)
-        {
-            liveRemaining = 0;
-        }
 
-        if (currentHealth <= 0)
-        {
-            onPlayerReset = true;
+        if (currentHealth <= 0) {
+            playerReset = true;
         } else {
-            onPlayerReset = false;
+            playerReset = false;
         }
             
     }
@@ -68,21 +66,21 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        if (onPlayerReset && liveRemaining > 0)
+        if (playerReset && liveRemaining > 0)
         {
             RemoveLife();
             StartCoroutine(PlayerDeath());
         }
         else if (liveRemaining < 1)
         {
-            onPlayerReset = false;
-            PlayerController.instance.rigid.velocity = Vector2.zero;
-            PlayerController.instance.canMove = false;
+            playerReset = false;
+            Destroy(gameObject);
             StartCoroutine(GoalManager.instance.SceneTransition());
         }
     }
 
     public float SetHealth(int health) => currentHealth = health;
+    public float GetMaxHealth() => maxHealth;
     public float Health() => currentHealth;
 
     private IEnumerator PlayerDeath()
@@ -97,17 +95,17 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Rigidbody2D pRigid = gameObject.GetComponent<Rigidbody2D>();
         if (PlayerController.instance.MoveDirection() > 0)
         {
-            pRigid.AddForce(new Vector2(gameObject.transform.forward.x - knockbackDistance, knockbackDistance), ForceMode2D.Impulse);
+            pRigid.AddForce(new Vector2(gameObject.transform.forward.x - knockbackDistance, PlayerController.instance.isGrounded ? knockbackDistance * 7.5f : knockbackDistance), ForceMode2D.Impulse);
         }
         else {
-            pRigid.AddForce(new Vector2(gameObject.transform.forward.x + knockbackDistance, knockbackDistance), ForceMode2D.Impulse);
+            pRigid.AddForce(new Vector2(gameObject.transform.forward.x + knockbackDistance, PlayerController.instance.isGrounded ? knockbackDistance * 7.5f : knockbackDistance), ForceMode2D.Impulse);
         }
 
-        PlayerController.instance.canMove = false;
+        PlayerController.instance.SetPlayerCanMove(false);
         PlayerAnimator.instance.anim.SetBool("isHurt", true);
         yield return new WaitForSeconds(stunTime);
         PlayerAnimator.instance.anim.SetBool("isHurt", false);
-        PlayerController.instance.canMove = true;
+        PlayerController.instance.SetPlayerCanMove(true);
     }
 
     

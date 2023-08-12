@@ -3,28 +3,26 @@
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    private float MoveSpeed;
+    [SerializeField] private float moveSpeed;
 
-    private float jumpForce;
-    private float jumpForceMultiplier = 0.5f;
-    private float doubleJumpsRemaining;
-    private float maxJumpCounter;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpForceMultiplier = 0.5f;
 
-    private float moveDirection;
     [SerializeField] private float groundDistance;
+    public float moveDirection { get; private set; }
 
-    private bool isGrounded;
-
-    private bool isFacingRight;
-    [HideInInspector] public bool canMove;
-    [HideInInspector] public bool canJump;
+    public bool isGrounded { get; private set;}
+    public bool canMove { get; private set;}
+    public bool canDoubleJump { get; private set;}
+    private bool isFacingRight = true;
+    
 
     [HideInInspector] public Rigidbody2D rigid;
     [HideInInspector] public AudioSource audioSource;
 
-    [SerializeField] private Transform PlayerSprite;
-    [SerializeField] private Transform GroundCheck;
-    [SerializeField] private LayerMask GroundMask;
+    [SerializeField] private Transform playerSprite;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundMask;
 
     public static PlayerController instance;
 
@@ -42,7 +40,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
         if (!canMove)
         {
             moveDirection = 0;
@@ -50,9 +47,8 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckInputDirection();
-        CheckGrounded();
+        IsGrounded();
         ProcessInputs();
-        CheckIfCanJump();
     }
 
     private void FixedUpdate()
@@ -68,7 +64,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump")){
-            Jump();
+            CheckCanJump();
         }
         else if (Input.GetButtonUp("Jump") && rigid.velocity.y > 0)
         {
@@ -78,65 +74,56 @@ public class PlayerController : MonoBehaviour
     
     private void CheckInputDirection()
     {
-        if (isFacingRight && moveDirection > 0)
+        if (isFacingRight && moveDirection < 0)
             Flip();
-        else if (!isFacingRight && moveDirection < 0)
+        else if (!isFacingRight && moveDirection > 0)
             Flip();
     }
 
-    private void CheckIfCanJump()
+    private void IsGrounded()
     {
-        if (doubleJumpsRemaining > 0)
-            canJump = true;
-        else
-            canJump = false;
-
-        if (doubleJumpsRemaining < 0)
-            doubleJumpsRemaining = 0;
-    }
-
-    private void CheckGrounded()
-    {
-        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, groundDistance, GroundMask);
-
-        if (isGrounded)
-            doubleJumpsRemaining = maxJumpCounter;
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundDistance, groundMask);
     }
 
     private void ApplyMovement(float dir)
     {
-        rigid.velocity = new Vector2(dir * MoveSpeed, rigid.velocity.y);
+        rigid.velocity = new Vector2(dir * moveSpeed, rigid.velocity.y);
     }
 
-    private void Jump()
-    {
-        if (isGrounded || canJump)
-        {
-            rigid.velocity = new Vector2(rigid.velocity.x, jumpForce);
-            audioSource.clip = AudioManager.instance.PlayerJumpAudio;
-            audioSource.Play();
-        }
+    private void Jump() {
+        rigid.velocity = new Vector2(rigid.velocity.x, jumpForce);
+        audioSource.clip = AudioManager.instance.PlayerJumpAudio;
+        audioSource.Play();
+    }
 
-        if (!isGrounded && canJump)
+    private void CheckCanJump() {
+        if (isGrounded) 
         {
-            doubleJumpsRemaining -= 1;
+            Jump();
+            canDoubleJump = true;
+        } 
+        else 
+        {
+            if (canDoubleJump) {
+                Jump();
+                canDoubleJump = false;
+            }
         }
     }
 
     private void Flip()
     {
         isFacingRight = !isFacingRight;
-        PlayerSprite.Rotate(0, 180, 0);
+        playerSprite.Rotate(0, 180, 0);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(GroundCheck.position, groundDistance);
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 
     public float MoveDirection() => moveDirection;
 
-    public float Speed() => MoveSpeed;
-
-    public bool IsGrounded() => isGrounded;
+    public float Speed() => moveSpeed;
+    public void SetPlayerCanMove(bool _canMove) => this.canMove = _canMove;
 }

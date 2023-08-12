@@ -24,36 +24,14 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (player.MoveDirection() != 0) {
-            anim.SetBool("isMoving", true);
-        }
-        else {
-            anim.SetBool("isMoving", false);
-        }
+        anim.SetBool("isMoving", player.moveDirection != 0);
 
-        if (player.IsGrounded())
-        {
-            anim.SetBool("isGrounded", true);
-        }
-        else {
-            anim.SetBool("isGrounded", false);
-        }
+        anim.SetBool("isGrounded", player.isGrounded);
 
-        if (!player.IsGrounded())
-        {
-            anim.SetBool("canDoubleJump", true);
-        }
-        else {
-            anim.SetBool("canDoubleJump", true);
-        }
+        anim.SetBool("canDoubleJump", player.canDoubleJump);
 
-        if (pHealth.onPlayerReset)
-        {
-            anim.SetBool("onPlayerReset", true);
-        }
-        else {
-            anim.SetBool("onPlayerReset", false);
-        }
+        anim.SetBool("onPlayerReset", pHealth.playerReset);
+
 
         anim.SetFloat("YVel", player.rigid.velocity.y);
         anim.SetBool("onLevelComplete", GoalManager.instance.onLevelComplete);
